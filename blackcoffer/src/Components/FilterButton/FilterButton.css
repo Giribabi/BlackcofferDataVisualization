@@ -1,0 +1,20 @@
+.filter-button {
+    display: block;
+    text-align: center;
+    width: 70%;
+    font-family: cursive;
+    white-space: nowrap;
+    font-size: large;
+    font-weight: 700;
+    padding: 0.5%;
+    color: whitesmoke;
+    background-color: blueviolet;
+    border-radius: 2em;
+    margin: 1%;
+    cursor: pointer;
+}
+.filter-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
