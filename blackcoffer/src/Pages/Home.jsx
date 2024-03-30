@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import FilterButton from "../Components/FilterButton/FilterButton";
 import LineChart from "../Components/LineChart/LineChart";
-//import BarChart from "../Components/BarChart/BarChart";
+import BarChart from "../Components/BarChart/BarChart";
 import { countries, regions, pestles, topics, sectors } from "../assets/data";
 import "./Home.css";
 import Nodata from "../Components/Nodata/Nodata";
@@ -13,6 +13,9 @@ function Home() {
     // use Ctrl+Shift+P and select "Join line" from pop up options to join multilines to single line
 
     const [loading, setLoading] = useState(false);
+    const [submitted, setSubmitted] = useState(false);
+    const [showLineChart, setShowLineChart] = useState(false);
+    const [showBarChart, setShowBarChart] = useState(false);
 
     const [countriesCheckedState, setCountriesCheckedState] = useState(
         new Array(countries.length).fill(false)
@@ -162,6 +165,7 @@ function Home() {
     ];
 
     const handleFilterSubmit = (e) => {
+        setSubmitted(true);
         e.preventDefault();
         //console.log("form submitted");
         var newquery = "";
@@ -301,6 +305,32 @@ function Home() {
                             </div>
                         </div>
                     ))}
+                    <div className="chart-selection">
+                        <div className="chart-selection-text">
+                            Select the charts through which you want to
+                            visualize data:
+                        </div>
+                        <div className="chart-options-container">
+                            <div
+                                className="chart-options"
+                                style={{
+                                    opacity: showBarChart ? "1" : "0.65",
+                                }}
+                                onClick={() => setShowBarChart(!showBarChart)}
+                            >
+                                Bar Chart
+                            </div>
+                            <div
+                                className="chart-options"
+                                style={{
+                                    opacity: showLineChart ? "1" : "0.60",
+                                }}
+                                onClick={() => setShowLineChart(!showLineChart)}
+                            >
+                                Line Chart
+                            </div>
+                        </div>
+                    </div>
                     <div className="submit-button-container">
                         <a href="#charts">
                             <button type="submit" className="submit-button">
@@ -314,10 +344,18 @@ function Home() {
                 <Loader />
             ) : (
                 <div className="data-container">
-                    {countriesCoordinates.length > 0 ? (
-                        <div className="charts-container">
-                            {/* <BarChart data={chartData} /> */}
-                            <LineChart data={chartData} />
+                    {countriesCoordinates.length > 0 && submitted ? (
+                        <div className="charts">
+                            {showLineChart && (
+                                <div className="charts-container">
+                                    <LineChart data={chartData} />
+                                </div>
+                            )}
+                            {showBarChart && (
+                                <div className="charts-container">
+                                    <BarChart data={chartData} />
+                                </div>
+                            )}
                         </div>
                     ) : (
                         <div className="no-data-display">
