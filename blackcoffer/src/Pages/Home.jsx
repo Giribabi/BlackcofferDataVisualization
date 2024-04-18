@@ -115,7 +115,7 @@ function Home() {
             //console.log(queryString);
             setLoading(true);
             const response = await fetch(
-                `http://localhost:3030/filter?+${queryString}`
+                `https://blackcofferdatavisualization.onrender.com/filter?+${queryString}`
             );
             const responseData = await response.json();
             //console.log(responseData);
